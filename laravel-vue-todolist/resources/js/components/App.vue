@@ -1,18 +1,20 @@
 <template>
-    <div>
-        <h1>This is App</h1>
+    <nav class="flex items-center justify-between flex-wrap bg-white p-6">
+        <div class="flex items-center flex-shrink-0 mr-6">
+            <span class="font-semibold text-2xl tracking-tight mr-2"><RouterLink to="/">wecode</RouterLink></span>
+            <RouterLink to="/" class="mx-2 text-gray-700 hover:text-black">Home</RouterLink>
+            <RouterLink to="/todos/create" class="ml-2 text-gray-700 hover:text-black">Add Todo</RouterLink>
+        </div>
+        <div>
+            <RouterLink to="/register" class="text-gray-700 hover:text-black">Register</RouterLink>
+            <RouterLink to="/login" class="ml-2 text-gray-700 hover:text-black">Login</RouterLink>
+        </div>
+    </nav>
+    <div class="p-6">
 
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/todos/create">Add Todo</RouterLink>
         <RouterView></RouterView>
     </div>
 </template>
 <script setup>
-
-import {onMounted} from "vue";
-
-onMounted(() => {
-    console.log('App mounted');
-})
 
 </script>
