@@ -23,10 +23,11 @@ class TodoController extends Controller
     // Store(create) a new resource
     public function store(Request $request)
     {
-        $validatedData = validate($request, [
-           'title' => 'required|min:3|max:45',
-           'description' => 'required|max:255',
-            'due_date' => 'required'
+        $validatedData = $request->validate([
+           'title' => 'required',
+           'description' => 'required',
+            'due_date' => 'required',
+            'complete' => 'required'
         ]);
 
         return Todo::create($validatedData);
@@ -46,10 +47,9 @@ class TodoController extends Controller
 
     public function update(Request $request, Todo $todo)
     {
-        $validatedData = validate($request, [
+        $validatedData = $request->validate([
             'title' => 'required|min:3|max:45',
             'description' => 'required|max:255',
-            'due_date' => 'required'
         ]);
 
         $todo->update($validatedData);

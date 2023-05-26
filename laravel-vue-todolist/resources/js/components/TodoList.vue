@@ -1,6 +1,6 @@
 <template>
+    <h1 class="text-3xl font-semibold mb-6">Your Todos</h1>
 <div class="flex flex-wrap gap-8 m-2">
-
     <div v-for="todo in todos" :key="todos.id" class="max-w-sm rounded overflow-hidden shadow-xl flex-wrap flex">
         <div class="flex px-6 py-4 w-full justify-between">
             <div class="font-semibold text-xl">{{ todo.title }}</div>
@@ -16,7 +16,7 @@
             <span class="bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2">{{todo.due_date}}</span>
             <div class="flex items-center justify-center">
                 <label for="checkbox" class="text-sm mr-2">Mark as complete:</label>
-                <input type="checkbox" class="" name="complete">
+                <input id="checkbox" type="checkbox" class="" name="complete">
             </div>
         </div>
 

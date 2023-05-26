@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center mt-6">
     <form @submit.prevent="submitForm" class="w-full max-w-lg bg-gray-50 border-2 border-gray-100 py-8 rounded px-8">
-        <h1 class="font-semibold text-2xl text-center mb-6 uppercase">Add todo</h1>
+        <h1 class="font-semibold text-2xl text-center mb-6 uppercase">{{ isNewTodo ? 'Add Todo' : 'Edit Todo' }}</h1>
         <div class="md:flex md:items-center mb-6">
             <div class="md:w-1/3">
                 <label class="block uppercase text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="title">
@@ -9,7 +9,7 @@
                 </label>
             </div>
             <div class="md:w-2/3">
-                <input class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black" id="inline-full-name" type="text" placeholder="Title..">
+                <input id="title" v-model="todo.title" class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black" type="text" placeholder="Title..">
             </div>
         </div>
         <div class="md:flex md:items-center mb-6">
@@ -19,7 +19,7 @@
                 </label>
             </div>
             <div class="md:w-2/3">
-                <textarea class="bg-gray-200 focus:bg-white py-2 px-4 text-gray-700 border-2 focus:border-black focus:outline-none leading-tight appearance-none rounded resize overflow-hidden max-w-full w-full" placeholder="Description.."></textarea>
+                <textarea id="description" v-model="todo.description" class="bg-gray-200 focus:bg-white py-2 px-4 text-gray-700 border-2 focus:border-black focus:outline-none leading-tight appearance-none rounded resize overflow-hidden max-w-full w-full" placeholder="Description.."></textarea>
             </div>
         </div>
         <div class="md:flex md:items-center mb-6">
@@ -29,12 +29,12 @@
                 </label>
             </div>
             <div class="md:w-2/3">
-                <input type="datetime-local" class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black" >
+                <input id="due_date" v-model="todo.due_date" type="datetime-local" class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black" >
             </div>
         </div>
             <div class="flex justify-end">
-                <button class="shadow uppercase bg-blue-500 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
-                    Add Todo
+                <button type="submit" class="shadow uppercase bg-blue-500 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                    {{ isNewTodo ? 'Add Todo' : 'Update Todo' }}
                 </button>
             </div>
     </form>
@@ -43,37 +43,42 @@
 
 <script setup>
 
-import {onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
+import moment from "moment";
 import axios from "axios";
+import {useRoute} from "vue-router";
 
-const todo = {
+const todo = ref({
     title:'',
     description: '',
-    due_date: '',
-}
+    due_date: moment().format('MM-DD-YYYY hh:mm'),
+    complete: 0
+});
 
-function isNewTodo() {
-    // base route /todos
-    // If the current route doesn't include /edit
-    return !this.$route.path.includes('edit');
-}
+const route = useRoute();
+
+// base route /todos
+// If the current route doesn't include /edit
+const isNewTodo = computed(() => {
+    return !route.path.includes('edit')
+});
 
 onMounted(async () => {
-    if(!this.isNewTodo){
-        const response = await axios.get(`/api/todos/${this.$route.params.id}`);
+    if(!isNewTodo){
+        const response = await axios.get(`/api/todos/${route.params.id}`);
         todo.value = response.data;
     }
 })
 
-async function submitForm(){
+const submitForm = async () =>{
+    console.log(todo.value);
     try {
-        if (this.isNewTodo){
+        if (isNewTodo){
             await axios.post('/api/todos', todo.value);
         }
         else {
-            await axios.put(`/api/todos/${this.$route.params.id}`, todo.value);
+            await axios.put(`/api/todos/${route.params.id}`, todo.value);
         }
-        await this.$router.push('/');
     } catch (error){
         console.error(error);
     }

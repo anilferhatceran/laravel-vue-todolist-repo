@@ -10,4 +10,9 @@ class Todo extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y H:i',
+        'due_date' => 'datetime:d-m-Y H:i',
+    ];
 }
