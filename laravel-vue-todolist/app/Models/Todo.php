@@ -14,5 +14,6 @@ class Todo extends Model
     protected $casts = [
         'created_at' => 'datetime:d-m-Y H:i',
         'due_date' => 'datetime:d-m-Y H:i',
+        'complete' => 'boolean'
     ];
 }

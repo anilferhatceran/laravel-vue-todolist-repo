@@ -17,15 +17,14 @@ class TodoController extends Controller
     // create is for showing a POST form
     public function create()
     {
-
     }
 
     // Store(create) a new resource
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-           'title' => 'required',
-           'description' => 'required',
+            'title' => 'required',
+            'description' => 'required',
             'due_date' => 'required',
             'complete' => 'required'
         ]);
@@ -42,7 +41,6 @@ class TodoController extends Controller
     // edit displays the edit form
     public function edit(Todo $todo)
     {
-
     }
 
     public function update(Request $request, Todo $todo)
@@ -50,6 +48,8 @@ class TodoController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|min:3|max:45',
             'description' => 'required|max:255',
+            'due_date' => 'required',
+            'complete' => 'required'
         ]);
 
         $todo->update($validatedData);
@@ -63,5 +63,4 @@ class TodoController extends Controller
 
         return response()->json(['message' => 'Todo deleted successfully. ']);
     }
-
 }

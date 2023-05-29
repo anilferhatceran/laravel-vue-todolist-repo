@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\TodoController;
+use App\Http\Controllers\RegisterController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,3 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('todos', TodoController::class);
+
+Route::get('register', [RegisterController::class, 'show'])->middleware('guest');
+Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
+Route::get('logout', [LoginController::class, 'destroy'])->middleware('auth');
