@@ -5,10 +5,7 @@
             <RouterLink to="/" class="mx-2 text-gray-700 hover:text-black">Home</RouterLink>
             <RouterLink to="/todos/create" class="ml-2 text-gray-700 hover:text-black">Add Todo</RouterLink>
         </div>
-        <!-- <div>
-            <RouterLink to="/register" class="text-gray-700 hover:text-black">Register</RouterLink>
-            <RouterLink to="/login" class="ml-2 text-gray-700 hover:text-black">Login</RouterLink>
-        </div> -->
+        
     </nav>
     <div class="p-6">
         <RouterView></RouterView>

@@ -24,7 +24,7 @@
                                     <div class="items-center mb-2 px-6 pt-4 pb-2 flex w-max justify-evenly">
                                         <label class="text-sm mr-2">Due Date:</label>
                                         <span class="bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold text-gray-700 mr-2">{{todo.due_date}}</span>
-                                        <div class="flex items-end justify-center">
+                                        <div class="flex items-center justify-center">
                                             <label for="checkbox" class="text-sm mr-2">Status:</label>
                                             <input id="checkbox" type="checkbox" @change="updateTodoStatus(todo)" v-model="todo.complete" :checked="todo.complete" value="{{ todo.complete }}">
                                         </div>
