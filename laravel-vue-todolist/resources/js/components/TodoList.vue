@@ -126,7 +126,7 @@ const startDrag = (event,todo) => {
     event.dataTransfer.dropEffect = 'move';
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('todoComplete', todo.complete);
-    todo.complete == true;
+    todo.complete === true;
     console.log(todo.complete);
 
 
