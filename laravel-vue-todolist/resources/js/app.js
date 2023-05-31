@@ -28,6 +28,8 @@ const router = createRouter({
         { path: '/todos/create', component: TodoForm },
         { path: '/todos/:id/edit', component: TodoForm },
         
+        // { path: '/register', component:RegisterView },
+        // { path: '/login', component:LoginView }
     ]
 });
 

@@ -1,6 +1,6 @@
 <template>
-    <div class="flex justify-center mt-6">
-    <form @submit.prevent="submitForm" class="w-full max-w-lg bg-gray-50 border-2 border-gray-100 py-8 rounded px-8">
+    <div class="flex justify-center items-center mt-8">
+    <form @submit.prevent="submitForm" class="w-full py-8 max-w-lg bg-gray-50 border-2 border-gray-100 rounded px-8">
         <h1 class="font-semibold text-2xl text-center mb-6 uppercase">{{ !isEditTodo ? 'Add Todo' : 'Edit Todo' }}</h1>
         <div class="md:flex md:items-center mb-6">
             <div class="md:w-1/3">
