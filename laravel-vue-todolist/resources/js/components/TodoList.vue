@@ -65,6 +65,7 @@
                                 </div>
                         </div>
             </TransitionGroup>
+            <button @click="submitLogout">Logout</button>
         </div>
     </div>
 </div>
@@ -118,6 +119,15 @@ const deleteTodo = async (id) => {
         console.error(error);
     }
 
+}
+
+const submitLogout = async() => {
+
+    try {
+        await axios.get('/logout');
+    }catch (error){
+        console.error(error)
+    }
 }
 
 

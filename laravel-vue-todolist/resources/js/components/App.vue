@@ -9,6 +9,8 @@
         <div>
             <RouterLink to="/register" class="text-gray-700 hover:text-black">Register</RouterLink>
             <RouterLink to="/login" class="ml-2 text-gray-700 hover:text-black">Login</RouterLink>
+
+
         </div>
 
     </nav>
@@ -17,5 +19,8 @@
     </div>
 </template>
 <script setup>
+
+    import axios from "axios";
+
 
 </script>

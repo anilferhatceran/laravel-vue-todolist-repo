@@ -49,8 +49,6 @@
 <script setup>
 import axios from "axios";
 
-axios.defaults.withCredentials = true
-axios.defaults.baseURL = 'http://127.0.0.1:8000/'
 
 import {reactive, ref} from "vue";
 import { useRouter } from "vue-router";
@@ -65,15 +63,12 @@ const user = reactive({
 
 const submitLogin = async() => {
 
-    axios.get('/sanctum/csrf-cookie').then(response => {
-        console.log(response);
-            // axios.post('/login', user)
-            //     .then(response => {
-            //         router.push('/');
-            //     }).catch(error => {
-            //         console.error(error);
-            // })
-        })
+    try {
+        await axios.post('/login', user);
+        return router.push('/');
+    }catch (error){
+        console.error(error)
+    }
 }
 
 
