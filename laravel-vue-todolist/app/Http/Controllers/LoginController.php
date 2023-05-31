@@ -8,17 +8,17 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
 
-    public function authenticate(Request $request)
+    public function store(Request $request)
     {
-        $credentials = $request->validate([
+        $attributes = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($attributes)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('dashboard');
+            return redirect()->intended();
         }
 
         return back()->withErrors([

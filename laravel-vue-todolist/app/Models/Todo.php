@@ -16,4 +16,9 @@ class Todo extends Model
         'due_date' => 'datetime:d-m-Y H:i',
         'complete' => 'boolean'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

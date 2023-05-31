@@ -9,11 +9,11 @@
                 </label>
             </div>
             <div class="md:w-2/3">
-                <input 
-                id="name" 
-                v-model="user.name" 
-                class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black" 
-                type="text" 
+                <input
+                id="name"
+                v-model="user.name"
+                class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                type="text"
                 placeholder="Your name.."
                 required
                 >
@@ -26,11 +26,11 @@
                 </label>
             </div>
             <div class="md:w-2/3">
-                <input 
-                id="email" 
-                v-model="user.email" 
-                class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black" 
-                type="email" 
+                <input
+                id="email"
+                v-model="user.email"
+                class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                type="email"
                 placeholder="Your email.."
                 required
                 >
@@ -43,11 +43,11 @@
                 </label>
             </div>
             <div class="md:w-2/3">
-                <input 
-                id="password" 
-                v-model="user.password" 
-                class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black" 
-                type="password" 
+                <input
+                id="password"
+                v-model="user.password"
+                class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                type="password"
                 placeholder="Your password.."
                 required
                 >
@@ -64,13 +64,13 @@
 
 <script setup>
 import axios from "axios";
-import { ref } from "vue";
+import {reactive, ref} from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
 
-const user = ref({
+const user = reactive({
     'name': '',
     'email':'',
     'password': ''
@@ -78,8 +78,8 @@ const user = ref({
 
 const submitForm = async() => {
     try {
-        await axios.post('/api/register', user.value);
-        router.push('/');
+        const res = await axios.post('/register', user);
+        console.log(res);
     } catch (error) {
         console.error(error);
     }

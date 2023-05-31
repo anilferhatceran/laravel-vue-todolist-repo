@@ -9,11 +9,11 @@
                 </label>
             </div>
             <div class="md:w-2/3">
-                <input 
-                id="title" 
-                v-model="todo.title" 
-                class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black" 
-                type="text" 
+                <input
+                id="title"
+                v-model="todo.title"
+                class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                type="text"
                 placeholder="Title.."
                 required
                 >
@@ -26,11 +26,11 @@
                 </label>
             </div>
             <div class="md:w-2/3">
-                <textarea 
-                id="description" 
-                v-model="todo.description" 
+                <textarea
+                id="description"
+                v-model="todo.description"
                 class="bg-gray-200 focus:bg-white py-2 px-4 text-gray-700 border-2 focus:border-black focus:outline-none leading-tight appearance-none rounded resize overflow-hidden max-w-full w-full" placeholder="Description.."
-                required   
+                required
                 ></textarea>
             </div>
         </div>
@@ -42,7 +42,7 @@
             </div>
             <div class="md:w-2/3">
                 <input id="due_date" v-model="todo.due_date" type="datetime-local" class="bg-gray-200 appearance-none rounded border-2 w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black" >
-                
+
                 <div v-if="isEditTodo" class="flex items-center justify-center">
                     <label for="checkbox" class="text-sm mr-2">Status:</label>
                     <input id="checkbox" type="checkbox" :checked="todo.complete" v-model="todo.complete" class="" name="complete" value="{{ todo.complete }}">
@@ -82,18 +82,18 @@ const isEditTodo = computed(() => {
 });
 
 onMounted(async () => {
-        if(isEditTodo.value == true){
+        if(isEditTodo.value === true){
             const response = await axios.get(`/api/todos/${route.params.id}`);
             todo.value.due_date = moment().format('MM-DD-YYYY hh:mm');
             todo.value = response.data;
         }
-    
+
 })
 
 const submitForm = async () =>{
     try {
         console.log(isEditTodo.value);
-        if (isEditTodo.value == false){
+        if (isEditTodo.value === false){
             await axios.post('/api/todos', todo.value);
         }
         else {

@@ -18,6 +18,8 @@ import {createRouter, createWebHistory} from "vue-router";
 import App from './components/App.vue'
 import TodoList from "./components/TodoList.vue";
 import TodoForm from "./components/TodoForm.vue";
+import RegisterView from "./components/RegisterView.vue";
+import LoginView from "./components/LoginView.vue";
 
 
 
@@ -27,9 +29,9 @@ const router = createRouter({
         { path: '/', component: TodoList },
         { path: '/todos/create', component: TodoForm },
         { path: '/todos/:id/edit', component: TodoForm },
-        
-        // { path: '/register', component:RegisterView },
-        // { path: '/login', component:LoginView }
+
+        { path: '/register', component:RegisterView },
+        { path: '/login', component:LoginView }
     ]
 });
 

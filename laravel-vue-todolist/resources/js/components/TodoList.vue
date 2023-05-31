@@ -4,13 +4,13 @@
         <h1 class="text-3xl font-semibold mb-6">In Progress</h1>
         <div class="flex flex-row flex-wrap gap-y-4 gap-x-2 border border-gray-100 px-4 py-6 w-full bg-gray-50" >
             <TransitionGroup name="inProgress">
-                        <div v-for="todo in inProgressList" 
+                        <div v-for="todo in inProgressList"
                         :key="todo.id"
                         draggable="true"
                         @dragstart="startDrag($event,todo)"
                         @drop="onDrop($event)"
                         @dragover.prevent
-                        @dragenter.prevent 
+                        @dragenter.prevent
                         class=" bg-white h-max rounded overflow-hidden shadow-xl">
                                     <div class="flex px-6 py-4 w-full justify-between">
                                         <div class="font-semibold text-xl mr-2 text-gray-700 hover:text-black hover:underline"><RouterLink :to="`/todos/${todo.id}/edit`">{{ todo.title }}</RouterLink></div>
@@ -38,13 +38,13 @@
         <h1 class="text-3xl font-semibold mb-6">Completed</h1>
         <div class="flex flex-row flex-wrap gap-y-4 gap-x-2 border border-gray-100 px-4 py-6 w-full bg-gray-50" >
             <TransitionGroup name="completed">
-                        <div v-for="todo in completedList" 
-                        :key="todo.id" 
+                        <div v-for="todo in completedList"
+                        :key="todo.id"
                         draggable="true"
                         @dragstart="startDrag($event,todo)"
                         @drop="onDrop($event)"
                         @dragover.prevent
-                        @dragenter.prevent 
+                        @dragenter.prevent
                         class=" rounded bg-white h-max overflow-hidden shadow-xl">
                                 <div class="flex px-6 py-4 w-full justify-between">
                                     <div class="font-semibold text-xl mr-2 text-gray-700 hover:text-black hover:underline"><RouterLink :to="`/todos/${todo.id}/edit`">{{ todo.title }}</RouterLink></div>
@@ -77,7 +77,6 @@
 <script setup>
 import axios from 'axios';
 import {computed, onMounted, ref} from "vue";
-import draggable from 'vuedraggable';
 
 const todos = ref([]);
 
@@ -104,7 +103,7 @@ onMounted(async() => {
 const updateTodoStatus = async(todo) => {
     try {
         await axios.put(`/api/todos/${todo.id}`, todo);
-    
+
     } catch (error) {
         console.error(error);
     }
@@ -129,13 +128,13 @@ const startDrag = (event,todo) => {
     event.dataTransfer.setData('todoComplete', todo.complete);
     todo.complete == true;
     console.log(todo.complete);
-    
+
 
 }
 const onDrop = (event) => {
     const todoComplete = event.dataTransfer.getData('todoComplete');
     console.log(todoComplete);
-    
+
 }
 
 </script>
