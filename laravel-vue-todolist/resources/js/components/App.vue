@@ -6,21 +6,43 @@
             <RouterLink to="/todos/create" class="ml-2 text-gray-700 hover:text-black">Add Todo</RouterLink>
         </div>
 
-        <div>
-            <RouterLink to="/register" class="text-gray-700 hover:text-black">Register</RouterLink>
-            <RouterLink to="/login" class="ml-2 text-gray-700 hover:text-black">Login</RouterLink>
-
-
+        <div v-if="currentUser">
+            <span class="font-semibold text-gray-600">{{currentUser && currentUser.name}}</span>
         </div>
 
+        <div>
+            <RouterLink to="/register" class="text-gray-700 hover:text-black">{{currentUser ? 'Register another account' : 'Register'}}</RouterLink>
+            <RouterLink to="/login" class="ml-2 text-gray-700 hover:text-black">{{currentUser ? 'Change account' : 'Login'}}</RouterLink>
+        </div>
     </nav>
     <div class="p-6">
         <RouterView></RouterView>
     </div>
+
 </template>
 <script setup>
+import axios from "axios";
+import {onMounted, onUpdated, ref} from "vue";
+axios.defaults.withCredentials = true;
 
-    import axios from "axios";
+let refreshKey = false;
+
+const currentUser = ref();
+
+onMounted(async() => {
+    try {
+            await axios.get('/sanctum/csrf-token');
+            const response = await axios.get('/api/user');
+
+            refreshKey = true;
+            return currentUser.value = response.data;
+
+    }catch (error){
+        console.error(error);
+
+    }
+})
+
 
 
 </script>

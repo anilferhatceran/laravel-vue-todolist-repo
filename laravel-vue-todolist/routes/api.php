@@ -16,9 +16,9 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
 Route::resource('todos', TodoController::class)->middleware('auth:sanctum');
 

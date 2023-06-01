@@ -78,8 +78,13 @@ const user = reactive({
 
 const submitForm = async() => {
     try {
-        const res = await axios.post('/register', user);
-        console.log(res);
+
+        await axios.get('/sanctum/csrf-cookie');
+
+        await axios.post('/register',user);
+        return router.push('/').then(() => {
+            router.go();
+        });
     } catch (error) {
         console.error(error);
     }

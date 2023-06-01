@@ -22,7 +22,6 @@ Route::get('/', function () {
 Route::get('register', [RegisterController::class, 'show']);
 Route::post('register', [RegisterController::class, 'store']);
 Route::post('login', [LoginController::class, 'store']);
-Route::get('logout', [LoginController::class, 'destroy']);
 
 
 

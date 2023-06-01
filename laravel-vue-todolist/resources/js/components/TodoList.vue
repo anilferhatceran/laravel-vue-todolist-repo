@@ -1,5 +1,5 @@
 <template>
-<div class="flex flex-row">
+<div v-if="todos.length >= 1" class="flex flex-row">
     <div class="flex flex-col w-1/2 mr-2">
         <h1 class="text-3xl font-semibold mb-6">In Progress</h1>
         <div class="flex flex-row flex-wrap gap-y-4 gap-x-2 border border-gray-100 px-4 py-6 w-full bg-gray-50" >
@@ -52,6 +52,7 @@
                                 </div>
                                 <div class="px-6 py-2">
                                     <p class="text-gray-700 text-base">
+
                                         {{ todo.description }}
                                     </p>
                                 </div>
@@ -65,36 +66,53 @@
                                 </div>
                         </div>
             </TransitionGroup>
-            <button @click="submitLogout">Logout</button>
         </div>
     </div>
 </div>
 
-
+    <div v-else v-if="currentUser">
+        <h1 class="text-gray-500 text-4xl text-center italic font-semibold">You do not have any todos added. Start by clicking <RouterLink to="/todos/create" class="underline">"Add todo"</RouterLink></h1>
+    </div>
+    <div v-else>
+        <h1 class="text-gray-500 text-4xl text-center italic font-semibold">You are not authorized to view this page. Please <RouterLink to="/register" class="underline">register</RouterLink> or <RouterLink to="/login" class="underline">login.</RouterLink> </h1>
+    </div>
 
 </template>
 
 
 <script setup>
 import axios from 'axios';
+
+axios.defaults.withCredentials = true;
+
 import {computed, onMounted, ref} from "vue";
 
 const todos = ref([]);
 
+const currentUser = ref();
 
 const inProgressList = computed(() => {
-        return todos.value.filter((todo) => !todo.complete);
+    return todos.value.filter((todo) => !todo.complete);
 })
 const completedList = computed(() => {
     return todos.value.filter((todo) => todo.complete)
+}, () => {
+
 })
-
-
 
 onMounted(async() => {
     try {
-        const response = await axios.get("/api/todos");
-        todos.value = response.data;
+
+
+            await axios.get('/sanctum/csrf-token');
+            const response = await axios.get('/api/user');
+            currentUser.value = response.data;
+
+            if(currentUser.value){
+                const todosApi = await axios.get('/api/todos')
+                return todos.value = todosApi.data;
+            }
+
     }
     catch (error){
         console.error(error);
@@ -132,18 +150,19 @@ const submitLogout = async() => {
 
 
 const startDrag = (event,todo) => {
-    console.log(todo.complete);
     event.dataTransfer.dropEffect = 'move';
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('todoComplete', todo.complete);
-    todo.complete === true;
-    console.log(todo.complete);
+
+
 
 
 }
 const onDrop = (event) => {
     const todoComplete = event.dataTransfer.getData('todoComplete');
-    console.log(todoComplete);
+    // const updatedTodoComplete = todos.value.complete !== todoComplete;
+
+
 
 }
 

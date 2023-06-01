@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Console\Input\Input;
 
 class LoginController extends Controller
 {
@@ -18,7 +20,7 @@ class LoginController extends Controller
         if (Auth::attempt($attributes)) {
             $request->session()->regenerate();
 
-            return redirect()->intended();
+            return Auth::user();
         }
 
         return back()->withErrors([

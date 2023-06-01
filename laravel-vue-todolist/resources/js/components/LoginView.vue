@@ -1,5 +1,4 @@
 <template>
-
     <div class="flex justify-center mt-6">
         <form @submit.prevent="submitLogin" class="w-full max-w-lg bg-gray-50 border-2 border-gray-100 py-8 rounded px-8">
             <h1 class="font-semibold text-2xl text-center mb-6 uppercase">Login</h1>
@@ -49,6 +48,8 @@
 <script setup>
 import axios from "axios";
 
+axios.defaults.withCredentials = true
+
 
 import {reactive, ref} from "vue";
 import { useRouter } from "vue-router";
@@ -62,13 +63,21 @@ const user = reactive({
 });
 
 const submitLogin = async() => {
-
     try {
+        await axios.get('/sanctum/csrf-cookie');
         await axios.post('/login', user);
-        return router.push('/');
+        const response = await axios.get('/api/user');
+
+        user.value = response.data
+        return router.push('/').then(() => {
+            router.go();
+        });
+
     }catch (error){
-        console.error(error)
+        console.error(error);
     }
+
+
 }
 
 
