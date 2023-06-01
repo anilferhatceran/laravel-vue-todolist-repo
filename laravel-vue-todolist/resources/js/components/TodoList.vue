@@ -8,7 +8,7 @@
                         :key="todo.id"
                         draggable="true"
                         @dragstart="startDrag($event,todo)"
-                        @drop="onDrop($event)"
+                        @drop="onDrop($event,todo.complete)"
                         @dragover.prevent
                         @dragenter.prevent
                         class=" bg-white h-max rounded overflow-hidden shadow-xl">
@@ -42,7 +42,7 @@
                         :key="todo.id"
                         draggable="true"
                         @dragstart="startDrag($event,todo)"
-                        @drop="onDrop($event)"
+                        @drop="onDrop($event,todo.complete)"
                         @dragover.prevent
                         @dragenter.prevent
                         class=" rounded bg-white h-max overflow-hidden shadow-xl">
@@ -158,10 +158,10 @@ const startDrag = (event,todo) => {
 
 
 }
-const onDrop = (event) => {
+const onDrop = (event, todoState) => {
     const todoComplete = event.dataTransfer.getData('todoComplete');
-    // const updatedTodoComplete = todos.value.complete !== todoComplete;
-
+    const todo = todos.value.find((todo) => todo.complete = todoComplete)
+    return todo.complete !== todoState
 
 
 }

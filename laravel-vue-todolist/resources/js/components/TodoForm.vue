@@ -92,12 +92,10 @@ onMounted(async () => {
 
 const submitForm = async () =>{
     try {
-        console.log(isEditTodo.value);
         if (isEditTodo.value === false){
             await axios.post('/api/todos', todo.value);
         }
         else {
-            console.log(isEditTodo.value);
             await axios.put(`/api/todos/${route.params.id}`, todo.value);
         }
         router.push('/');
